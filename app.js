@@ -1,14 +1,8 @@
 const inquirer = require("inquirer");
-// const fs = require("fs");
+const fs = require("fs");
 
-// const generatePage = require('./src/page-template');
-// const pageHTML = generatePage(userName, github);
+const generatePage = require('./src/page-template');
 
-// fs.writeFile('./index.html', pageHTML, err => {
-//     if (err) throw err;
-
-//     console.log("Porfolio complete! checkout Index.html to see the output");
-// });
 const promptUser = () => {
     return inquirer.prompt([
         {
@@ -65,8 +59,8 @@ const promptProject = portfolioData => {
     =================
     ADD a NEW PROJECT
     =================`);
-    return inquirer.prompt([
-        {
+    return inquirer.prompt(
+        [{
             type: "input",
             name: "name",
             message: "what is the name of your project? (REQUIRED)",
@@ -92,7 +86,7 @@ const promptProject = portfolioData => {
         },
         {
             type: "checkbox",
-            name: "language",
+            name: "languages",
             message: "What did you build this project with? (Check all that applied)",
             choices: ["JAVASCRIPT", "HTML", "CSS", "ES6", "jQuery", "Bootstrap", "Node"]
         },
@@ -134,5 +128,11 @@ const promptProject = portfolioData => {
 promptUser()
     .then(promptProject)
     .then(portfolioData => {
-        console.log(portfolioData);
+        const pageHTML = generatePage(portfolioData);
+
+        fs.writeFile('./index.html', pageHTML, err => {
+            if (err) throw err;
+
+            console.log("Porfolio complete! checkout Index.html to see the output");
+        });
     });

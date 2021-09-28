@@ -8,7 +8,7 @@ const promptUser = () => {
         {
             type: 'input',
             name: 'name',
-            message: "What is your name? (REQUIRED",
+            message: "What is your name? (REQUIRED)",
             validate: nameInput => {
                 if (nameInput){
                     return true;
